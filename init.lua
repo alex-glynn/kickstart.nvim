@@ -4,10 +4,11 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.vimtex_view_method = 'skim'
-vim.g.copilot_assume_mapped = true
+-- vim.g.copilot_assume_mapped = true
 vim.g.R_assign = 0
 vim.g.R_rconsole_width = 80
 vim.g.R_min_editor_width = 18
+vim.g.codeium_manual = true
 vim.opt.conceallevel = 1
 
 -- Install package manager
@@ -37,8 +38,10 @@ require('lazy').setup({
   -- Git related plugins
   'tpope/vim-fugitive',
   'tpope/vim-rhubarb',
-  'github/copilot.vim',
-
+  -- 'github/copilot.vim',
+  {
+    'Exafunction/codeium.vim',
+  },
   -- Command line
   {
     "folke/noice.nvim",
@@ -63,8 +66,12 @@ require('lazy').setup({
 
   -- R language
   'jalvesaq/Nvim-R',
-  -- julia
-  'JuliaEditorSupport/julia-vim',
+  -- REPL
+  {
+    'luk400/vim-jukit',
+    ft = { 'julia', 'python' },
+  },
+
   -- LaTeX
   'lervag/vimtex',
   {
@@ -674,8 +681,6 @@ require('lazy').setup({
       })
     end
   },
-  -- Python notebook
-  --'luk400/vim-jukit',
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -893,6 +898,9 @@ vim.keymap.set({ 'n', 'v' }, '<leader>cl', ':setlocal conceallevel=<C-R>=&concea
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+-- Format markdown tables
+vim.keymap.set('v', '<leader>t', '!pandoc -t gfm<CR>', { silent = true, desc = 'Align md table' })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
